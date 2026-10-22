@@ -1,0 +1,147 @@
+{"id": "test-0", "q": "starting a chicken business with little money", "lang": "en", "gold": ["start-backyard"]}
+{"id": "test-1", "q": "how to keep records for my layers", "lang": "en", "gold": ["record-keeping"]}
+{"id": "test-2", "q": "what age to sell broilers", "lang": "en", "gold": ["broiler-overview"]}
+{"id": "test-3", "q": "when to switch from starter to finisher", "lang": "en", "gold": ["broiler-feeding"]}
+{"id": "test-4", "q": "what is a good fcr for broilers", "lang": "en", "gold": ["broiler-fcr"]}
+{"id": "test-5", "q": "space needed per layer hen", "lang": "en", "gold": ["stocking-density"]}
+{"id": "test-6", "q": "setting up a brooder guard", "lang": "en", "gold": ["brooding"]}
+{"id": "test-7", "q": "chicks panting far from heater", "lang": "en", "gold": ["brooding-temp"]}
+{"id": "test-8", "q": "lots of chicks dead in first 3 days", "lang": "en", "gold": ["chick-mortality"]}
+{"id": "test-9", "q": "when do layer hens reach peak production", "lang": "en", "gold": ["layer-overview"]}
+{"id": "test-10", "q": "calcium for laying hens", "lang": "en", "gold": ["layer-feeding"]}
+{"id": "test-11", "q": "egg production dropped after transfer", "lang": "en", "gold": ["low-egg"]}
+{"id": "test-12", "q": "thin eggshells from old hens", "lang": "en", "gold": ["egg-shell"]}
+{"id": "test-13", "q": "stop chickens from eating eggs", "lang": "en", "gold": ["egg-eating"]}
+{"id": "test-14", "q": "what happens during molting", "lang": "en", "gold": ["molting"]}
+{"id": "test-15", "q": "how to break a broody hen", "lang": "en", "gold": ["broody"]}
+{"id": "test-16", "q": "which hens to cull", "lang": "en", "gold": ["culling"]}
+{"id": "test-17", "q": "is darag chicken good to raise", "lang": "en", "gold": ["native-chicken"]}
+{"id": "test-18", "q": "pasture raised chickens setup", "lang": "en", "gold": ["free-range"]}
+{"id": "test-19", "q": "homemade chicken feed formula", "lang": "en", "gold": ["local-feeds"]}
+{"id": "test-20", "q": "chickens not drinking water", "lang": "en", "gold": ["water"]}
+{"id": "test-21", "q": "roof design for chicken house", "lang": "en", "gold": ["housing"]}
+{"id": "test-22", "q": "best litter material for broilers", "lang": "en", "gold": ["litter"]}
+{"id": "test-23", "q": "chickens dying from heat in the afternoon", "lang": "en", "gold": ["heat-stress"]}
+{"id": "test-24", "q": "preventing disease from visitors", "lang": "en", "gold": ["biosecurity"]}
+{"id": "test-25", "q": "fowl pox vaccine age", "lang": "en", "gold": ["vaccination"]}
+{"id": "test-26", "q": "how to store chicken vaccines", "lang": "en", "gold": ["vaccine-handling"]}
+{"id": "test-27", "q": "is there a cure for newcastle disease", "lang": "en", "gold": ["newcastle"]}
+{"id": "test-28", "q": "purple comb and swollen head chickens", "lang": "en", "gold": ["avian-flu"]}
+{"id": "test-29", "q": "broilers with bloody diarrhea at 4 weeks", "lang": "en", "gold": ["coccidiosis"]}
+{"id": "test-30", "q": "chicken face swelling with discharge", "lang": "en", "gold": ["coryza"]}
+{"id": "test-31", "q": "broilers dying at 4 weeks with white watery droppings", "lang": "en", "gold": ["gumboro"]}
+{"id": "test-32", "q": "warts on chicken face", "lang": "en", "gold": ["fowl-pox"]}
+{"id": "test-33", "q": "best dewormer for chickens", "lang": "en", "gold": ["worms"]}
+{"id": "test-34", "q": "chickens scratching and feather loss from parasites", "lang": "en", "gold": ["mites-lice"]}
+{"id": "test-35", "q": "many birds died in one night", "lang": "en", "gold": ["sudden-death"]}
+{"id": "test-36", "q": "can i use amoxicillin for chickens", "lang": "en", "gold": ["medication"]}
+{"id": "test-37", "q": "drug residue in eggs", "lang": "en", "gold": ["withdrawal"]}
+{"id": "test-38", "q": "can i throw dead chickens in the river", "lang": "en", "gold": ["dead-birds"]}
+{"id": "test-39", "q": "where to report sick poultry", "lang": "en", "gold": ["vet-help"]}
+{"id": "test-40", "q": "humidity for hatching eggs", "lang": "en", "gold": ["incubation"]}
+{"id": "test-41", "q": "turkey egg hatching days", "lang": "en", "gold": ["hatch-days"]}
+{"id": "test-42", "q": "candling eggs on day 7", "lang": "en", "gold": ["candling"]}
+{"id": "test-43", "q": "why my eggs failed to hatch", "lang": "en", "gold": ["poor-hatch"]}
+{"id": "test-44", "q": "do ducks need a swimming pond", "lang": "en", "gold": ["ducks"]}
+{"id": "test-45", "q": "difference between balut and penoy", "lang": "en", "gold": ["balut"]}
+{"id": "test-46", "q": "quail lighting hours", "lang": "en", "gold": ["quail"]}
+{"id": "test-47", "q": "sasso vs native chicken", "lang": "en", "gold": ["breeds"]}
+{"id": "test-48", "q": "storing eggs pointed end down", "lang": "en", "gold": ["egg-handling"]}
+{"id": "test-49", "q": "nmis accreditation for chicken dressing", "lang": "en", "gold": ["slaughter"]}
+{"id": "test-50", "q": "composting chicken manure", "lang": "en", "gold": ["manure"]}
+{"id": "test-51", "q": "how to compute broiler profit", "lang": "en", "gold": ["cost-profit"]}
+{"id": "test-52", "q": "integrator contract for broiler growers", "lang": "en", "gold": ["contract-growing"]}
+{"id": "test-53", "q": "do i need ecc for a poultry farm", "lang": "en", "gold": ["permits"]}
+{"id": "test-54", "q": "selling eggs to restaurants", "lang": "en", "gold": ["marketing"]}
+{"id": "test-55", "q": "ways to save on chicken feed", "lang": "en", "gold": ["feed-cost-reduce"]}
+{"id": "test-56", "q": "protect chickens from civets at night", "lang": "en", "gold": ["predators"]}
+{"id": "test-57", "q": "Unsa ang una nakong buhaton sa pagbuhi og manok?", "lang": "ceb", "gold": ["start-backyard"]}
+{"id": "test-58", "q": "Kanus-a ilisan ang pagkaon sa broiler gikan starter ngadto finisher?", "lang": "ceb", "gold": ["broiler-feeding"]}
+{"id": "test-59", "q": "Bugnaw kaayo ang mga piso, pila ka init ang angay?", "lang": "ceb", "gold": ["brooding-temp"]}
+{"id": "test-60", "q": "Nangamatay ang piso sa unang semana", "lang": "ceb", "gold": ["chick-mortality"]}
+{"id": "test-61", "q": "Unsa ang pagkaon sa himungaan aron daghan mangitlog?", "lang": "ceb", "gold": ["layer-feeding"]}
+{"id": "test-62", "q": "Mikunhod ang pangitlog sa akong himungaan", "lang": "ceb", "gold": ["low-egg"]}
+{"id": "test-63", "q": "Nipis ang panit sa itlog sa akong manok", "lang": "ceb", "gold": ["egg-shell"]}
+{"id": "test-64", "q": "Nalagas ang balhibo ug wala nangitlog", "lang": "ceb", "gold": ["molting"]}
+{"id": "test-65", "q": "Unsa ang maayong lahi sa manok bisaya?", "lang": "ceb", "gold": ["native-chicken"]}
+{"id": "test-66", "q": "Unsa ang lokal nga pagkaon para sa manok bisaya?", "lang": "ceb", "gold": ["local-feeds"]}
+{"id": "test-67", "q": "Naay agup-op ang sako sa pagkaon", "lang": "ceb", "gold": ["feed-storage"]}
+{"id": "test-68", "q": "Basa ug baho ang upa sa tangkal", "lang": "ceb", "gold": ["litter"]}
+{"id": "test-69", "q": "Init kaayo ang tangkal, nangamatay ang manok sa hapon", "lang": "ceb", "gold": ["heat-stress"]}
+{"id": "test-70", "q": "Kanus-a ang bakuna sa peste?", "lang": "ceb", "gold": ["vaccination"]}
+{"id": "test-71", "q": "Nagkiwi ang liog ug lunhaw ang iti sa manok", "lang": "ceb", "gold": ["newcastle"]}
+{"id": "test-72", "q": "Kalit nga nangamatay ug nanghubag ang ulo sa manok", "lang": "ceb", "gold": ["avian-flu"]}
+{"id": "test-73", "q": "Naay dugo ang tae sa broiler", "lang": "ceb", "gold": ["coccidiosis"]}
+{"id": "test-74", "q": "Nanghubag ang mata ug naay singa ang manok", "lang": "ceb", "gold": ["coryza"]}
+{"id": "test-75", "q": "Nag-ubo ug lisod moginhawa ang manok", "lang": "ceb", "gold": ["respiratory"]}
+{"id": "test-76", "q": "Kanus-a purgahon ang manok bisaya?", "lang": "ceb", "gold": ["worms"]}
+{"id": "test-77", "q": "Naay hanip sa salag sa manok", "lang": "ceb", "gold": ["mites-lice"]}
+{"id": "test-78", "q": "Unsa ang tambal sa manok nga masakiton?", "lang": "ceb", "gold": ["medication"]}
+{"id": "test-79", "q": "Unsaon paglabay sa patay nga manok?", "lang": "ceb", "gold": ["dead-birds"]}
+{"id": "test-80", "q": "Pila ka beses balihon ang itlog sa inkubeytor?", "lang": "ceb", "gold": ["incubation"]}
+{"id": "test-81", "q": "Pila ka adlaw mapisa ang itlog sa manok?", "lang": "ceb", "gold": ["hatch-days"]}
+{"id": "test-82", "q": "Unsaon pag-atiman sa pato?", "lang": "ceb", "gold": ["ducks"]}
+{"id": "test-83", "q": "Pila ka itlog sa pugo matag tuig?", "lang": "ceb", "gold": ["quail"]}
+{"id": "test-84", "q": "Pila ka adlaw molungtad ang itlog nga dili ibutang sa ref?", "lang": "ceb", "gold": ["egg-handling"]}
+{"id": "test-85", "q": "Pila ang ganansya sa 50 ka broiler?", "lang": "ceb", "gold": ["cost-profit"]}
+{"id": "test-86", "q": "Unsa ang mga permiso sa negosyo nga manokan?", "lang": "ceb", "gold": ["permits"]}
+{"id": "test-87", "q": "Gikaon sa iring ang akong piso", "lang": "ceb", "gold": ["predators"]}
+{"id": "test-88", "q": "Paano mag-alaga ng broiler?", "lang": "tl", "gold": ["broiler-overview"]}
+{"id": "test-89", "q": "Ano ang ihahanda bago dumating ang mga sisiw?", "lang": "tl", "gold": ["brooding"]}
+{"id": "test-90", "q": "Ilang oras ng ilaw ang kailangan ng inahin?", "lang": "tl", "gold": ["layer-lighting"]}
+{"id": "test-91", "q": "Bumaba ang itlog ng mga inahin ko", "lang": "tl", "gold": ["low-egg"]}
+{"id": "test-92", "q": "Kinakain ng manok ang sariling itlog", "lang": "tl", "gold": ["egg-eating"]}
+{"id": "test-93", "q": "Paano mag-alaga ng manok na nakawala sa labas?", "lang": "tl", "gold": ["free-range"]}
+{"id": "test-94", "q": "Ilang litro ng tubig ang kailangan ng manok?", "lang": "tl", "gold": ["water"]}
+{"id": "test-95", "q": "Mabaho ang kulungan ng manok", "lang": "tl", "gold": ["litter"]}
+{"id": "test-96", "q": "Ano ang bakuna para sa sisiw?", "lang": "tl", "gold": ["vaccination"]}
+{"id": "test-97", "q": "Baluktot ang leeg ng manok ko", "lang": "tl", "gold": ["newcastle"]}
+{"id": "test-98", "q": "May dugo ang tae ng sisiw", "lang": "tl", "gold": ["coccidiosis"]}
+{"id": "test-99", "q": "May bulutong ang manok ko", "lang": "tl", "gold": ["fowl-pox"]}
+{"id": "test-100", "q": "May bulate ang manok, anong gamot?", "lang": "tl", "gold": ["worms"]}
+{"id": "test-101", "q": "Bigla na lang namatay ang maraming manok", "lang": "tl", "gold": ["sudden-death"]}
+{"id": "test-102", "q": "Pwede bang kainin ang itlog habang ginagamot ang manok?", "lang": "tl", "gold": ["withdrawal"]}
+{"id": "test-103", "q": "Saan ako hihingi ng tulong para sa may sakit na manok?", "lang": "tl", "gold": ["vet-help"]}
+{"id": "test-104", "q": "Ilang araw mapisa ang itlog ng itik?", "lang": "tl", "gold": ["hatch-days"]}
+{"id": "test-105", "q": "Ilang araw bago maging balut ang itlog?", "lang": "tl", "gold": ["balut"]}
+{"id": "test-106", "q": "Anong lahi ng manok ang maraming itlog?", "lang": "tl", "gold": ["breeds"]}
+{"id": "test-107", "q": "Kumikita ba ang pag-aalaga ng broiler?", "lang": "tl", "gold": ["cost-profit"]}
+{"id": "test-108", "q": "Saan ibebenta ang manok na native?", "lang": "tl", "gold": ["marketing"]}
+{"id": "test-109", "q": "Pwede bang gawing abono ang dumi ng manok?", "lang": "tl", "gold": ["manure"]}
+{"id": "test-110", "q": "paano i-compute ang FCR ng broiler?", "lang": "mix", "gold": ["broiler-fcr"]}
+{"id": "test-111", "q": "pila ka degrees ang init sa piso sa week 2?", "lang": "mix", "gold": ["brooding-temp"]}
+{"id": "test-112", "q": "kanus-a mag-start og lay ang pullets?", "lang": "mix", "gold": ["layer-overview"]}
+{"id": "test-113", "q": "ginatuka sa hens ang eggs, how to stop?", "lang": "mix", "gold": ["egg-eating"]}
+{"id": "test-114", "q": "panting ang manok kay init kaayo", "lang": "mix", "gold": ["heat-stress"]}
+{"id": "test-115", "q": "need ba og footbath sa manokan?", "lang": "mix", "gold": ["biosecurity"]}
+{"id": "test-116", "q": "unsaon pag-store sa vaccine sa manok?", "lang": "mix", "gold": ["vaccine-handling"]}
+{"id": "test-117", "q": "bird flu sa manok, unsay buhaton?", "lang": "mix", "gold": ["avian-flu"]}
+{"id": "test-118", "q": "gumboro ba kung white ang tae sa broiler?", "lang": "mix", "gold": ["gumboro"]}
+{"id": "test-119", "q": "nag-sneeze ug ubo ang chickens", "lang": "mix", "gold": ["respiratory"]}
+{"id": "test-120", "q": "anong antibiotic para sa colds ng manok?", "lang": "mix", "gold": ["medication"]}
+{"id": "test-121", "q": "pila ka degrees ang incubator para sa chicken eggs?", "lang": "mix", "gold": ["incubation"]}
+{"id": "test-122", "q": "unsaon pag-candle sa eggs?", "lang": "mix", "gold": ["candling"]}
+{"id": "test-123", "q": "wala na-hatch ang eggs sa incubator", "lang": "mix", "gold": ["poor-hatch"]}
+{"id": "test-124", "q": "how to raise pugo for eggs?", "lang": "mix", "gold": ["quail"]}
+{"id": "test-125", "q": "need ba og permit to sell dressed chicken?", "lang": "mix", "gold": ["slaughter"]}
+{"id": "test-126", "q": "unsa ang requirements sa contract growing?", "lang": "mix", "gold": ["contract-growing"]}
+{"id": "test-127", "q": "unsaon pag-reduce sa feed cost?", "lang": "mix", "gold": ["feed-cost-reduce"]}
+{"id": "test-128", "q": "hello, maayong gabii", "lang": "mix", "gold": ["greet"]}
+{"id": "test-129", "q": "hog cholera vaccine schedule", "lang": "en", "gold": ["OOD"]}
+{"id": "test-130", "q": "how to feed a calf", "lang": "en", "gold": ["OOD"]}
+{"id": "test-131", "q": "dog vaccination schedule", "lang": "en", "gold": ["OOD"]}
+{"id": "test-132", "q": "best fertilizer for rice", "lang": "en", "gold": ["OOD"]}
+{"id": "test-133", "q": "how to grill chicken wings", "lang": "en", "gold": ["OOD"]}
+{"id": "test-134", "q": "laptop not turning on", "lang": "en", "gold": ["OOD"]}
+{"id": "test-135", "q": "how to raise rabbits", "lang": "en", "gold": ["OOD"]}
+{"id": "test-136", "q": "cure for human cough", "lang": "en", "gold": ["OOD"]}
+{"id": "test-137", "q": "Unsaon pagbuhi og kanding?", "lang": "ceb", "gold": ["OOD"]}
+{"id": "test-138", "q": "Unsa ang tambal sa hilanat sa tawo?", "lang": "ceb", "gold": ["OOD"]}
+{"id": "test-139", "q": "Pila ang presyo sa baboy karon?", "lang": "ceb", "gold": ["OOD"]}
+{"id": "test-140", "q": "Unsaon pagluto og lechon manok?", "lang": "ceb", "gold": ["OOD"]}
+{"id": "test-141", "q": "Paano mag-alaga ng tilapia?", "lang": "tl", "gold": ["OOD"]}
+{"id": "test-142", "q": "Ano ang bakuna sa aso?", "lang": "tl", "gold": ["OOD"]}
+{"id": "test-143", "q": "Paano magtanim ng palay?", "lang": "tl", "gold": ["OOD"]}
+{"id": "test-144", "q": "best gamefowl bloodline for sabong?", "lang": "mix", "gold": ["OOD"]}
+{"id": "test-145", "q": "unsaon pag-repair sa motor?", "lang": "mix", "gold": ["OOD"]}
+{"id": "test-146", "q": "presyo sa feeds sa baboy?", "lang": "mix", "gold": ["OOD"]}

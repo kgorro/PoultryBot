@@ -1,0 +1,217 @@
+<title>PoultryBot</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Libre+Franklin:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: feed-sack label header, then a working desk: chat on the left, the farm topic shelf on the right; stacks on phones. */
+:root{
+  --bg:#edf0ea; --surface:#ffffff; --surface-2:#e4e9e1; --ink:#16241d; --muted:#4f5f56; --line:#c9d2c6;
+  --sack:#1f5a3f; --sack-ink:#f3f6f1; --yolk:#e1a01c; --yolk-ink:#231803; --comb:#b3352b; --comb-tint:#f6e1de; --good:#2c7a46;
+  --user:#1f5a3f; --user-ink:#f3f6f1;
+  --display:"Saira Stencil One", Impact, "Arial Narrow", sans-serif;
+  --body:"Libre Franklin", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101814; --surface:#17221c; --surface-2:#1e2b24; --ink:#e3ebe5; --muted:#9aaca1; --line:#2c3b33;
+  --sack:#3f9a6b; --sack-ink:#0c140f; --yolk:#f0b437; --yolk-ink:#1d1402; --comb:#ef7a6d; --comb-tint:#3a1f1c; --good:#6cc48a;
+  --user:#2a6e4c; --user-ink:#f3f6f1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101814; --surface:#17221c; --surface-2:#1e2b24; --ink:#e3ebe5; --muted:#9aaca1; --line:#2c3b33;
+  --sack:#3f9a6b; --sack-ink:#0c140f; --yolk:#f0b437; --yolk-ink:#1d1402; --comb:#ef7a6d; --comb-tint:#3a1f1c; --good:#6cc48a;
+  --user:#2a6e4c; --user-ink:#f3f6f1; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:16px 28px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+
+.label{background:var(--sack);color:var(--sack-ink);border-radius:4px;padding:14px 20px;display:flex;flex-wrap:wrap;gap:6px 24px;align-items:flex-end;justify-content:space-between}
+.label h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,54px);letter-spacing:.03em;line-height:.95;margin:0}
+.label .spec{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;display:grid;grid-template-columns:auto auto;gap:2px 14px;opacity:.92}
+.label .spec b{font-weight:500}
+
+.alert{display:flex;gap:10px;align-items:flex-start;background:var(--comb-tint);border-left:4px solid var(--comb);padding:10px 14px;border-radius:3px;font-size:14px}
+.alert strong{color:var(--comb)}
+
+.grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+
+.chat{background:var(--surface);border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column;min-width:0;height:min(78vh,760px);min-height:540px}
+.chat-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.chat-head b{font-size:15px}
+.toggle{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer}
+.log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
+.msg{max-width:90%;min-width:0;display:flex;flex-direction:column;gap:6px}
+.msg.user{align-self:flex-end}
+.bubble{padding:10px 14px;border-radius:10px;overflow-wrap:anywhere}
+.user .bubble{background:var(--user);color:var(--user-ink);border-bottom-right-radius:3px}
+.bot .bubble{background:var(--surface-2);border-bottom-left-radius:3px}
+.bubble p{margin:0 0 6px}.bubble p:last-child{margin:0}
+.bubble ul{margin:4px 0 6px;padding-left:20px}.bubble li{margin:2px 0}
+.bubble .t{font-weight:700;display:block;margin-bottom:4px}
+.bubble .note{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px;margin-top:8px}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pill{border:1px solid currentColor;border-radius:999px;padding:1px 8px;font-weight:500}
+.pill.skip{color:var(--good)}.pill.generate{color:var(--yolk)}.pill.abstain{color:var(--muted)}.pill.cache{color:var(--sack)}
+.words{display:flex;flex-wrap:wrap;gap:4px}
+.word{font-family:var(--mono);font-size:11px;background:var(--surface-2);border-radius:3px;padding:1px 6px;color:var(--ink)}
+.word i{font-style:normal;color:var(--muted)}
+.related{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:13px;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 11px;cursor:pointer}
+.chip:hover{border-color:var(--sack);color:var(--sack)}
+.chip:focus-visible,.tab:focus-visible,.send:focus-visible,.ask:focus-visible{outline:2px solid var(--yolk);outline-offset:2px}
+.quick{display:flex;gap:6px;padding:10px 16px 0;overflow-x:auto;scrollbar-width:thin}
+.quick .chip{white-space:nowrap}
+form{display:flex;gap:8px;padding:12px 16px 16px}
+form input{flex:1;min-width:0;font:inherit;padding:11px 14px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+form input:focus{outline:2px solid var(--yolk);outline-offset:0;border-color:transparent}
+.send{font-family:var(--display);font-size:19px;letter-spacing:.06em;background:var(--yolk);color:var(--yolk-ink);border:0;border-radius:6px;padding:0 18px;cursor:pointer}
+
+.shelf{background:var(--surface);border:1px solid var(--line);border-radius:6px;min-width:0;display:flex;flex-direction:column}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.tab{font:inherit;font-size:13px;font-weight:600;background:none;border:1px solid var(--line);color:var(--muted);border-radius:4px;padding:4px 10px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--sack);border-color:var(--sack);color:var(--sack-ink)}
+.panel{padding:12px 16px 16px;display:flex;flex-direction:column;max-height:min(70vh,690px);overflow-y:auto}
+.panel h2{font-family:var(--display);font-weight:400;font-size:26px;letter-spacing:.03em;margin:0 0 2px}
+.panel .lede{margin:0 0 8px;color:var(--muted);font-size:14px}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.row div{min-width:0}
+.row b{display:block;font-size:15px;font-weight:600}
+.row span{font-size:13px;color:var(--muted)}
+.ask{font:inherit;font-size:13px;background:none;border:1px solid var(--line);color:var(--ink);border-radius:4px;padding:4px 10px;cursor:pointer;flex:none}
+.ask:hover{border-color:var(--sack);color:var(--sack)}
+
+.how{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.how{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){.how{grid-template-columns:1fr}}
+.how div{min-width:0}
+.how b{font-family:var(--display);font-weight:400;font-size:19px;letter-spacing:.04em;display:block}
+.how p{margin:2px 0 0;font-size:13.5px;color:var(--muted)}
+.foot{font-size:12.5px;color:var(--muted);margin:0;max-width:80ch}
+@media (prefers-reduced-motion:no-preference){.msg{animation:in .16s ease-out}@keyframes in{from{transform:translateY(4px)}to{transform:none}}}
+</style>
+
+<div class="wrap">
+  <header class="label">
+    <h1>PoultryBot</h1>
+    <div class="spec" aria-label="Coverage">
+      <span>Birds</span><b>Broilers · Layers · Native · Ducks · Quail</b>
+      <span>Languages</span><b>English · Cebuano · Tagalog</b>
+      <span>Knowledge base</span><b id="kbinfo"></b>
+    </div>
+  </header>
+
+  <div class="alert" role="note"><strong>Many birds dying suddenly?</strong><span>Stop moving or selling birds and eggs, keep visitors out, and call your municipal agriculturist or provincial veterinarian. Newcastle disease and bird flu must be reported.</span></div>
+
+  <div class="grid">
+    <section class="chat" aria-label="Chat">
+      <div class="chat-head">
+        <b>Ask a poultry question</b>
+        <label class="toggle"><input type="checkbox" id="showRoute" checked> Show how it decided</label>
+      </div>
+      <div class="log" id="log" aria-live="polite"></div>
+      <div class="quick" id="quick"></div>
+      <form id="f" autocomplete="off">
+        <input id="q" placeholder="e.g. Pila ka adlaw mapisa ang itlog sa itik?" aria-label="Your question">
+        <button class="send" type="submit">Ask</button>
+      </form>
+    </section>
+    <aside class="shelf" aria-label="Topics">
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="panel" id="panel" role="tabpanel"></div>
+    </aside>
+  </div>
+
+  <section class="how" aria-label="How it answers">
+    <div><b>Understand</b><p>Reads Cebuano and Tagalog word forms (nangitlog, bumili, nag-ubo) and maps them to farm terms.</p></div>
+    <div><b>Verified answer</b><p>When confidence is high, answers straight from the vetted knowledge base. No AI writing.</p></div>
+    <div><b>Local AI</b><p>When unsure, a small AI on the farm's own computer answers from the top 3 entries only.</p></div>
+    <div><b>Decline</b><p>Outside poultry, it says so and points to the right help instead of guessing.</p></div>
+  </section>
+  <p class="foot">Prototype. Figures are typical ranges for guidance; follow your strain guide, feed supplier, and a licensed veterinarian. PoultryBot never gives drug doses. In this browser demo the AI step is shown but not run; it runs in the full system with a local model.</p>
+</div>
+
+<script>/*__DALAN__*/</script>
+<script>
+const KB = /*__KB__*/null;
+const MODEL = /*__MODEL__*/null;
+const router = DALAN.create(MODEL, KB);
+const byId = Object.fromEntries(KB.entries.map(e => [e.id, e]));
+const cache = new Map();
+const $ = s => document.querySelector(s);
+const log = $("#log");
+$("#kbinfo").textContent = `${KB.entries.length - 1} topics, checked ${KB.verified}`;
+
+const esc = s => s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function fmt(text){
+  let html = "", list = false;
+  for (const l of text.split("\n")){
+    if (l.startsWith("- ")){ if(!list){html+="<ul>";list=true} html+="<li>"+esc(l.slice(2))+"</li>"; }
+    else { if(list){html+="</ul>";list=false} if(l.trim()) html+="<p>"+esc(l)+"</p>"; }
+  }
+  return html + (list ? "</ul>" : "");
+}
+function add(role, html, extra){
+  const m = document.createElement("div"); m.className = "msg " + role;
+  m.innerHTML = '<div class="bubble">' + html + '</div>' + (extra || "");
+  log.appendChild(m); log.scrollTop = log.scrollHeight;
+}
+const LANG = {ceb:"Cebuano", tl:"Tagalog", mix:"mixed"};
+function ask(q){
+  q = q.trim(); if (!q) return;
+  add("user", esc(q));
+  const key = q.toLowerCase().replace(/\s+/g, " ");
+  let r = cache.get(key), hit = !!r;
+  if (!r){ r = router.route(q); cache.set(key, r); }
+  const label = hit ? ["cache","Remembered"] : r.action === "skip" ? ["skip","Verified answer"] : r.action === "generate" ? ["generate","Local AI step"] : ["abstain","Declined"];
+  let body = "";
+  if (r.action === "abstain"){ body = fmt(byId.fallback.answer); }
+  else {
+    const e = r.entry;
+    body = '<span class="t">' + esc(e.title) + '</span>' + fmt(e.answer);
+    if (r.action === "generate") body += '<p class="note">I\'m not fully sure this matches your question. In the full system, a local AI writes a short answer using only: ' + r.context.map(c => esc(c.title)).join(", ") + '.</p>';
+  }
+  const local = r.tags.filter(t => t[1] !== "en" && t[1] !== "unk");
+  let meta = '<div class="meta route-meta"><span class="pill ' + label[0] + '">' + label[1] + '</span><span>confidence ' + r.p.toFixed(2) + '</span><span>' + (r.bucket === "cs" ? "local-language thresholds" : "English thresholds") + '</span><span>' + (r.ms < 0.1 ? "<0.1" : r.ms.toFixed(1)) + ' ms</span></div>';
+  if (local.length) meta += '<div class="words route-meta">' + local.map(t => '<span class="word">' + esc(t[0]) + ' <i>' + (LANG[t[1]] || t[1]) + '</i></span>').join("") + '</div>';
+  const rel = r.action !== "abstain" ? r.context.slice(1).map(c => '<button class="chip" data-q="' + esc(c.questions[0] || c.title) + '">' + esc(c.title) + '</button>').join("") : "";
+  add("bot", body, meta + (rel ? '<div class="related">' + rel + '</div>' : ""));
+  vis();
+}
+function vis(){ const on = $("#showRoute").checked; document.querySelectorAll(".route-meta").forEach(el => el.hidden = !on); }
+$("#showRoute").addEventListener("change", vis);
+$("#f").addEventListener("submit", e => { e.preventDefault(); ask($("#q").value); $("#q").value = ""; });
+document.addEventListener("click", e => { const b = e.target.closest("[data-q]"); if (b) ask(b.dataset.q); });
+
+const QUICK = ["Nganong naay dugo ang iti sa akong manok?", "Nganong wala na nangitlog akong himungaan?", "What temperature for day-old chicks?", "Bakit may dugo ang dumi ng manok?", "Pila ka adlaw mapisa ang itlog sa itik?", "How much feed does a broiler eat?", "Kanus-a bakunahan ang broiler?", "Paano mag-alaga ng pugo?", "How to raise pigs?"];
+$("#quick").innerHTML = QUICK.map(q => '<button class="chip" data-q="' + esc(q) + '">' + esc(q) + '</button>').join("");
+
+const GROUPS = [
+  ["health", "Health", "Diseases, vaccines, biosecurity, and when to call a veterinarian."],
+  ["brooding", "Chicks", "The first weeks: heat, setup, and early losses."],
+  ["broiler", "Broilers", "Meat chickens from day 1 to market."],
+  ["layer", "Layers", "Laying hens, egg production, and egg problems."],
+  ["native", "Native", "Philippine native and free-range chickens."],
+  ["feed", "Feed & water", "Rations, local ingredients, storage, and water."],
+  ["housing", "Housing", "Coop design, litter, space, and predators."],
+  ["incubation", "Hatching", "Incubators, candling, and hatching times."],
+  ["other-birds", "Ducks & quail", "Itik, pato, balut, and pugo."],
+  ["food-safety", "Eggs & meat", "Handling, grading, and dressing."],
+  ["business", "Business", "Costs, records, permits, and selling."],
+  ["general", "Start", "Getting started and choosing breeds."],
+];
+function tab(id){
+  const g = GROUPS.find(x => x[0] === id);
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.g === id));
+  const items = KB.entries.filter(e => e.group === id && !["greet","fallback"].includes(e.id));
+  $("#panel").innerHTML = '<h2>' + g[1] + '</h2><p class="lede">' + g[2] + '</p>' + items.map(e => '<div class="row"><div><b>' + esc(e.title) + '</b><span>' + esc(e.questions[0] || "") + '</span></div><button class="ask" data-q="' + esc(e.questions[0] || e.title) + '">Ask</button></div>').join("");
+  $("#panel").scrollTop = 0;
+}
+$("#tabs").innerHTML = GROUPS.map(g => '<button class="tab" role="tab" data-g="' + g[0] + '">' + g[1] + '</button>').join("");
+$("#tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) tab(b.dataset.g); });
+tab("health");
+
+add("bot", fmt(byId.greet.answer));
+ask("Nganong mikunhod ang itlog sa akong himungaan?");
+</script>
