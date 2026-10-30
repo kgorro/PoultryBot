@@ -22,7 +22,7 @@ def export(router, path):
         gamma=router.norm.gamma, k_ctx=router.k_ctx,
         stop=sorted(N.STOP), en_guard=sorted(N.EN_GUARD), en_vocab=sorted(router.norm.en_vocab),
         lexicon=LEXICON, contractions=CONTRACTIONS, prefixes=PREFIXES, suffixes=SUFFIXES,
-        ids=router.ids,
+        ids=router.ids, gates=[sorted(g) if g else None for g in router.gates],
         lex_docs=[dict(title=sorted(d["title"]), kw=sorted(d["kw"]), q=sorted(d["q"]), phrases=d["phrases"]) for d in lex.docs],
         lex_idf=lex.idf, lex_default_idf=lex.default_idf,
         char_idf=ch.idf, char_vecs=ch.vecs,

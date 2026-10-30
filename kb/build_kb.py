@@ -9,7 +9,7 @@ Safety rules for content:
   - Treat Newcastle disease and avian influenza as reportable: advise isolation and reporting.
   - Figures are typical ranges for guidance, not prescriptions; strain guides and suppliers come first.
 
-Edit entries here, run `python kb/build_kb.py`, and all components pick up the change.
+Edit entries here (or add a markdown pack in kb/sources/), run `python kb/build_kb.py`, and all components pick up the change.
 """
 import json
 from pathlib import Path
@@ -762,7 +762,17 @@ add("predators", "housing", "Housing", "Protecting chickens from predators",
 Count birds every evening so losses are noticed early.
 """)
 
-kb = dict(name="PoultryBot KB", verified=VERIFIED, entries=E)
+# ---------------------------------------------------------------- LOCAL RESEARCH (markdown packs)
+import sys  # noqa: E402
+sys.path.insert(0, str(Path(__file__).parent))
+from ingest_md import load_all  # noqa: E402
+
+PACKS, MD_ENTRIES = load_all()
+E += MD_ENTRIES
+dupes = {e["id"] for e in E if sum(x["id"] == e["id"] for x in E) > 1}
+assert not dupes, f"duplicate entry ids: {dupes}"
+
+kb = dict(name="PoultryBot KB", verified=VERIFIED, sources=[{k: v for k, v in p.items()} for p in PACKS], entries=E)
 out = Path(__file__).parent / "kb.json"
 out.write_text(json.dumps(kb, ensure_ascii=False, indent=1), encoding="utf-8")
 if __name__ == "__main__":

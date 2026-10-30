@@ -375,8 +375,66 @@ t("ceb", OOD, "Unsaon pagbuhi og kanding?", "Unsa ang tambal sa hilanat sa tawo?
 t("tl", OOD, "Paano mag-alaga ng tilapia?", "Ano ang bakuna sa aso?", "Paano magtanim ng palay?")
 t("mix", OOD, "best gamefowl bloodline for sabong?", "unsaon pag-repair sa motor?", "presyo sa feeds sa baboy?")
 
+# ======================================================================= LOCAL RESEARCH PACKS (kb/sources/*.md)
+# Added 2026-10 with the four Cebu and Bantayan studies. Dev rows are appended after the original rows so earlier
+# ids are unchanged. The matching held-out rows go to data/test_research.jsonl, a separate file, so the original
+# test set stays exactly as first written.
+RTEST = []
+
+
+def rt(lang, gold, *qs):
+    for q in qs:
+        RTEST.append(dict(q=q, lang=lang, gold=gold if isinstance(gold, list) else [gold]))
+
+
+d("en", "res-manure-survey", "manure handling survey results bantayan layer farms", "what tools do bantayan farms use to remove manure")
+d("ceb", "res-manure-survey", "Unsaon sa mga layer farm sa Bantayan pagkuha sa ipot?")
+d("en", "res-manure-uses", "price of a sack of dried manure in bantayan", "who buys chicken manure from bantayan layer farms")
+d("tl", "res-manure-uses", "Magkano ang isang sako ng ipot sa Bantayan?")
+d("en", "res-manure-problems", "biggest manure problem in the bantayan survey", "manure drying during rain on bantayan farms")
+d("ceb", "res-manure-problems", "Lisod mamala ang ipot sa among farm sa Bantayan")
+d("en", "res-manure-knowledge", "do bantayan farmers know manure can be used as fuel", "manure for aquaculture survey bantayan")
+d("tl", "res-manure-knowledge", "Ano ang alam ng mga magsasaka sa Bantayan sa gamit ng dumi ng manok?")
+d("en", "res-parasite-prevalence", "percent of bantayan farms with worms in layers", "most common parasite found in bantayan layers")
+d("ceb", "res-parasite-prevalence", "Pila ka porsyento sa manok sa Bantayan ang naay bitok?")
+d("en", "res-parasite-deworming", "is deworming every 3 months working on bantayan farms", "dewormer resistance study bantayan")
+d("tl", "res-parasite-deworming", "Gumagana pa ba ang purga sa mga manok sa Bantayan?")
+d("en", "res-parasite-control", "tapeworm in layers from beetles", "heterakis cecal worm and blackhead")
+d("ceb", "res-parasite-control", "Unsaon paglikay sa tapeworm sa manok?")
+d("en", "res-serology-results", "gumboro antibody levels in bantayan layers", "serology results newcastle bronchitis gumboro bantayan")
+d("ceb", "res-serology-results", "Igo ba ang antibody sa manok sa Bantayan batok sa Gumboro?")
+d("en", "res-serology-vaccination", "how many bantayan farms give gumboro vaccine", "why antibodies to gumboro without vaccinating")
+d("tl", "res-serology-vaccination", "Ilan sa mga farm sa Bantayan ang nagbabakuna ng IBD?")
+d("en", "res-serology-newcastle-risk", "newcastle outbreak in a vaccinated layer flock", "vaccinated hens still dying of newcastle")
+d("ceb", "res-serology-newcastle-risk", "Nabakunahan na ang among manok pero naa gihapoy Newcastle")
+d("en", "res-cebu-farm-profile", "how big are most layer farms in cebu", "average egg trays per day cebu layer farm survey")
+d("tl", "res-cebu-farm-profile", "Gaano kalaki ang karaniwang layer farm sa Cebu?")
+d("en", "res-cebu-production", "cage size used by cebu layer farms", "how many hens per cage do cebu farms use")
+d("ceb", "res-cebu-production", "Pila ka beses magpakaon ang mga layer farm sa Cebu kada adlaw?")
+d("en", "res-cebu-biosecurity", "how many cebu farms have a visitor logbook", "footbath and fence use cebu poultry survey")
+d("tl", "res-cebu-biosecurity", "Ilang farm sa Cebu ang may rodent control?")
+d("en", "res-cebu-health-practices", "do cebu layer farms give booster vaccines", "antibiotics used by cebu layer farms survey")
+d("ceb", "res-cebu-health-practices", "Unsa nga antibiotic ang kasagaran gamiton sa mga farm sa Cebu?")
+
+rt("en", "res-manure-uses", "what do bantayan farms do with dried manure", "selling price of layer manure per sack bantayan")
+rt("ceb", "res-manure-problems", "Baho kaayo ang ipot sa among farm sa Santa Fe, unsay buhaton?")
+rt("en", "res-manure-survey", "how many sacks of manure do bantayan farms make each week")
+rt("en", "res-parasite-prevalence", "worm infection rate in bantayan island layers")
+rt("tl", "res-parasite-prevalence", "Ilang porsyento ng mga farm sa Bantayan ang may bulate?")
+rt("en", "res-parasite-deworming", "bantayan deworming frequency study")
+rt("en", "res-parasite-control", "how to prevent raillietina tapeworm in hens")
+rt("en", "res-serology-results", "are bantayan layers immune to newcastle based on blood tests")
+rt("ceb", "res-serology-vaccination", "Pila ka farm sa Bantayan ang nagbakuna og Newcastle?")
+rt("en", "res-serology-newcastle-risk", "can vaccinated chickens still get newcastle disease")
+rt("en", "res-cebu-farm-profile", "what breed do most cebu layer farms use")
+rt("tl", "res-cebu-production", "Ilang beses kinokolekta ang itlog sa mga farm sa Cebu?")
+rt("en", "res-cebu-biosecurity", "biosecurity weaknesses of cebu layer farms")
+rt("ceb", "res-cebu-health-practices", "Naghatag ba og booster nga bakuna ang mga farm sa Cebu?")
+rt("en", "res-cebu-health-practices", "what dewormers do cebu layer farms use")
+
+
 out = Path(__file__).parent
-for name, rows in (("dev", DEV), ("test", TEST)):
+for name, rows in (("dev", DEV), ("test", TEST), ("test_research", RTEST)):
     with (out / f"{name}.jsonl").open("w", encoding="utf-8") as f:
         for i, r in enumerate(rows):
             f.write(json.dumps(dict(id=f"{name}-{i}", **r), ensure_ascii=False) + "\n")

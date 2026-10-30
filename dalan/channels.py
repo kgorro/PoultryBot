@@ -21,8 +21,20 @@ def entry_text(e):
     return " ".join([e["title"], " ".join(e["keywords"]), " ".join(e["questions"])])
 
 
+def two_tier_df(doc_terms, core):
+    """Document frequencies for IDF. Terms seen in core (ungated) entries use core counts only, so adding
+    scope-gated packs never changes how everyday questions rank; terms unique to gated entries use all entries."""
+    core = core if core is not None else [True] * len(doc_terms)
+    dfc, dfa = Counter(), Counter()
+    for terms, c in zip(doc_terms, core):
+        dfa.update(terms)
+        if c:
+            dfc.update(terms)
+    return dfc, dfa, sum(core), len(doc_terms)
+
+
 class LexicalChannel:
-    def __init__(self, entries):
+    def __init__(self, entries, core=None):
         self.entries = entries
         self.docs = []
         for e in entries:
@@ -33,11 +45,8 @@ class LexicalChannel:
                 q=set().union(*[tk(q) for q in e["questions"]]) if e["questions"] else set(),
                 phrases=[fold(k) for k in e["keywords"] if " " in fold(k)],
             ))
-        df = Counter()
-        for d in self.docs:
-            df.update(d["title"] | d["kw"] | d["q"])
-        n = len(self.docs)
-        self.idf = {t: math.log(1 + n / c) for t, c in df.items()}
+        dfc, dfa, nc, n = two_tier_df([d["title"] | d["kw"] | d["q"] for d in self.docs], core)
+        self.idf = {t: math.log(1 + nc / dfc[t]) if t in dfc else math.log(1 + n / c) for t, c in dfa.items()}
         self.default_idf = math.log(2)
 
     def scores(self, nq):
@@ -74,13 +83,11 @@ def char_grams(text, lo=3, hi=5):
 
 
 class CharChannel:
-    def __init__(self, entries):
+    def __init__(self, entries, core=None):
         docs = [char_grams(fold(entry_text(e))) for e in entries]
-        df = Counter()
-        for d in docs:
-            df.update(d.keys())
-        n = len(docs)
-        self.idf = {g: math.log((1 + n) / (1 + c)) + 1 for g, c in df.items()}
+        dfc, dfa, nc, n = two_tier_df([d.keys() for d in docs], core)
+        self.idf = {g: (math.log((1 + nc) / (1 + dfc[g])) if g in dfc else math.log((1 + n) / (1 + c))) + 1
+                    for g, c in dfa.items()}
         self.vecs = [self._vec(d) for d in docs]
 
     def _vec(self, grams):

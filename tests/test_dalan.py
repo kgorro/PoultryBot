@@ -46,6 +46,49 @@ def test_router_actions():
     assert tau_abs <= tau_skip
 
 
+def test_markdown_packs():
+    """Every research entry comes from a pack, cites it, has a scope gate, and keeps the safety rules."""
+    sys.path.insert(0, str(ROOT / "kb"))
+    from ingest_md import load_all
+    packs, entries = load_all()
+    assert len(packs) == 4 and len(entries) == 14
+    kb_ids = {e["id"] for e in KB["entries"]}
+    pack_cues = {c.strip() for p in packs for c in p["scope"].split(",")}
+    for e in entries:
+        assert e["id"] in kb_ids and "Source:" in e["answer"] and e["scope"], e["id"]
+        assert not any(set(k.split()) & pack_cues for k in e["keywords"]), e["id"]
+    for eid in ("res-serology-results", "res-parasite-deworming", "res-cebu-health-practices"):
+        assert "veterinarian" in next(e for e in entries if e["id"] == eid)["answer"], eid
+
+
+def test_scope_gate():
+    """Research entries answer local-study questions but never take everyday questions."""
+    r = DALANRouter(KB).fit(DEV)
+    assert r.route("Pila ang presyo sa ipot sa manok kada sako sa Bantayan?")["ranked_ids"][0] == "res-manure-uses"
+    assert r.route("gumboro antibody levels in bantayan layers")["ranked_ids"][0] == "res-serology-results"
+    for q in ("Naay bitok ang manok, unsay tambal?", "Kanus-a bakunahan ang broiler?", "Paano gumawa ng kulungan ng manok?"):
+        assert not r.route(q)["ranked_ids"][0].startswith("res-"), q
+
+
+def test_dump_roundtrip(tmp=None):
+    """A dump loads, reproduces the fitted router's decisions, and is rejected when the KB hash changes."""
+    import tempfile
+    from dalan import dump
+    with tempfile.TemporaryDirectory() as d:
+        out = Path(d)
+        dump.build(out=out)
+        router, cache = dump.load(path=out)
+        fresh = dump.fitted_router()
+        for q in ["Unsaon pagbuhi og pugo?", "how common are worms in bantayan layers", "how to raise pigs"]:
+            a, b = router.route(q), fresh.route(q)
+            assert (a["action"], a["ranked_ids"]) == (b["action"], b["ranked_ids"]) and abs(a["p"] - b["p"]) < 1e-12
+        assert cache and all(v["entry_id"] for v in cache.values())
+        m = json.loads((out / "manifest.json").read_text())
+        m["files"]["kb/kb.json"] = "stale"
+        (out / "manifest.json").write_text(json.dumps(m))
+        assert dump.load(path=out) is None
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

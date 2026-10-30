@@ -1,0 +1,18 @@
+{
+ "built": "2026-10-30 14:19",
+ "eps": 0.05,
+ "entries": 78,
+ "cached_questions": 671,
+ "fit_seconds": 0.59,
+ "files": {
+  "kb/kb.json": "861060b2ecc92909",
+  "kb/system_prompt.txt": "31f0b19a47dce730",
+  "data/dev.jsonl": "87bcde2156a27807",
+  "data/test.jsonl": "d639661b0dff81ba",
+  "dalan/normalize.py": "2dee5c328b8a1054",
+  "dalan/channels.py": "0dc01a0dc87d7efd",
+  "dalan/calibrate.py": "13268ac89817466a",
+  "dalan/router.py": "f35fbd393471398f",
+  "dalan/lexicon.py": "f0a43cd027a23222"
+ }
+}

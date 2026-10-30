@@ -1,6 +1,7 @@
 """Experiments for the DALAN router on the PoultryBot knowledge base.
 
 Data: data/dev.jsonl (cross-validation, tuning) and data/test.jsonl (held out, evaluated once at the end).
+data/test_research.jsonl (questions on the local research packs) is reported separately at the end.
 
 Protocol
   Repeated stratified 5-fold cross-validation (10 repeats, strata = language x in/out-of-domain).
@@ -66,8 +67,7 @@ class Analysis:
             t0 = time.perf_counter()
             nq, x, order = r._analyze(q["q"])
             ms.append((time.perf_counter() - t0) * 1000)
-            lex = r.lex.scores(nq)
-            ch = r.char.scores(nq) if r.char else np.zeros_like(lex)
+            lex, ch = r.channel_scores(nq)
             gold = set(q["gold"])
             top = [r.ids[i] for i in order[:K_CTX]]
             X.append(x)
@@ -446,6 +446,27 @@ for name, pts in pareto.items():
 
 vals, cnts = np.unique(gammas_chosen, return_counts=True)
 lines.append("\nGloss weight gamma chosen on training folds: " + ", ".join(f"{v}: {c} folds" for v, c in zip(vals, cnts)) + ".")
+
+# ------------------------------------------------------------------ local research packs (separate small set)
+RT_PATH = ROOT / "data" / "test_research.jsonl"
+if RT_PATH.exists():
+    RT = [json.loads(l) for l in RT_PATH.read_text(encoding="utf-8").splitlines()]
+    rr = DALANRouter(KB).fit(DEV)
+    res = [(rr.route(q["q"]), set(q["gold"])) for q in RT]
+    top1 = sum(d["ranked_ids"][0] in g for d, g in res)
+    inctx = sum(bool(set(d["ranked_ids"]) & g) for d, g in res)
+    skips = [(d, g) for d, g in res if d["action"] == "skip"]
+    lines.append("\n## Local research packs (data/test_research.jsonl)\n")
+    lines.append(f"{len(RT)} questions on the 14 entries from kb/sources/*.md, written with the dev questions for those "
+                 "entries. DALAN fitted on all dev queries. The set was looked at once before the last keyword edits "
+                 "(which were driven by dev errors), so treat it as a check, not a clean held-out estimate.\n")
+    lines.append("| Top-1 % | Gold in top 3 % | Skip % | Wrong skips (of all) % | Generate % | Abstain % |")
+    lines.append("|---|---|---|---|---|---|")
+    n = len(RT)
+    lines.append(f"| {pct(top1 / n)} | {pct(inctx / n)} | {pct(len(skips) / n)} | "
+                 f"{pct(sum(d['ranked_ids'][0] not in g for d, g in skips) / n)} | "
+                 f"{pct(sum(d['action'] == 'generate' for d, _ in res) / n)} | "
+                 f"{pct(sum(d['action'] == 'abstain' for d, _ in res) / n)} |")
 
 (RES / "results.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 with open(RES / "summary.csv", "w") as f:

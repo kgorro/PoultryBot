@@ -1,29 +1,29 @@
 method,param,llm_rate,wrong_rate,accuracy
-DALAN (eps sweep),0.0,0.1965,0.0362,0.9111
-DALAN (eps sweep),0.01,0.1965,0.0362,0.9111
-DALAN (eps sweep),0.02,0.1462,0.0377,0.9097
-DALAN (eps sweep),0.03,0.1076,0.0422,0.9068
-DALAN (eps sweep),0.05,0.0551,0.0548,0.8997
-DALAN (eps sweep),0.08,0.0154,0.0756,0.8847
-DALAN (eps sweep),0.1,0.0048,0.0971,0.8877
-DALAN (eps sweep),0.15,0.0000,0.1362,0.8638
-DALAN (eps sweep),0.2,0.0000,0.1421,0.8579
-DALAN (eps sweep),0.3,0.0000,0.1421,0.8579
-B2 hybrid (threshold sweep),3,0.0000,0.1082,0.5441
-B2 hybrid (threshold sweep),4,0.0036,0.1057,0.5466
-B2 hybrid (threshold sweep),5,0.0071,0.1032,0.5490
-B2 hybrid (threshold sweep),6,0.0071,0.1032,0.5490
-B2 hybrid (threshold sweep),8,0.0385,0.0882,0.5568
-B2 hybrid (threshold sweep),10,0.0421,0.0885,0.5564
-B2 hybrid (threshold sweep),12,0.0807,0.0751,0.5699
-B2 hybrid (threshold sweep),15,0.1157,0.0592,0.5858
-B2 hybrid (threshold sweep),20,0.1227,0.0528,0.5921
-B3 CSN + hybrid (threshold sweep),3,0.0000,0.1293,0.8707
-B3 CSN + hybrid (threshold sweep),4,0.0036,0.1268,0.8732
-B3 CSN + hybrid (threshold sweep),5,0.0071,0.1243,0.8757
-B3 CSN + hybrid (threshold sweep),6,0.0071,0.1243,0.8757
-B3 CSN + hybrid (threshold sweep),8,0.0176,0.1198,0.8802
-B3 CSN + hybrid (threshold sweep),10,0.0280,0.1174,0.8826
-B3 CSN + hybrid (threshold sweep),12,0.0457,0.1163,0.8837
-B3 CSN + hybrid (threshold sweep),15,0.1299,0.0858,0.9118
-B3 CSN + hybrid (threshold sweep),20,0.1545,0.0706,0.9270
+DALAN (eps sweep),0.0,0.2283,0.0389,0.9095
+DALAN (eps sweep),0.01,0.1917,0.0417,0.9081
+DALAN (eps sweep),0.02,0.1281,0.0429,0.9076
+DALAN (eps sweep),0.03,0.0865,0.0470,0.9046
+DALAN (eps sweep),0.05,0.0395,0.0623,0.8923
+DALAN (eps sweep),0.08,0.0101,0.0786,0.8873
+DALAN (eps sweep),0.1,0.0010,0.0956,0.8908
+DALAN (eps sweep),0.15,0.0000,0.1272,0.8728
+DALAN (eps sweep),0.2,0.0000,0.1312,0.8688
+DALAN (eps sweep),0.3,0.0000,0.1312,0.8688
+B2 hybrid (threshold sweep),3,0.0000,0.1069,0.5932
+B2 hybrid (threshold sweep),4,0.0030,0.1047,0.5953
+B2 hybrid (threshold sweep),5,0.0061,0.1026,0.5974
+B2 hybrid (threshold sweep),6,0.0061,0.1026,0.5974
+B2 hybrid (threshold sweep),8,0.0334,0.0895,0.6041
+B2 hybrid (threshold sweep),10,0.0365,0.0898,0.6038
+B2 hybrid (threshold sweep),12,0.0703,0.0779,0.6157
+B2 hybrid (threshold sweep),15,0.1039,0.0616,0.6320
+B2 hybrid (threshold sweep),20,0.1101,0.0560,0.6376
+B3 CSN + hybrid (threshold sweep),3,0.0000,0.1190,0.8810
+B3 CSN + hybrid (threshold sweep),4,0.0030,0.1169,0.8831
+B3 CSN + hybrid (threshold sweep),5,0.0061,0.1147,0.8853
+B3 CSN + hybrid (threshold sweep),6,0.0061,0.1147,0.8853
+B3 CSN + hybrid (threshold sweep),8,0.0152,0.1107,0.8893
+B3 CSN + hybrid (threshold sweep),10,0.0275,0.1089,0.8911
+B3 CSN + hybrid (threshold sweep),12,0.0398,0.1102,0.8898
+B3 CSN + hybrid (threshold sweep),15,0.1225,0.0817,0.9162
+B3 CSN + hybrid (threshold sweep),20,0.1440,0.0685,0.9294

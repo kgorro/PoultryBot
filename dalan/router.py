@@ -32,8 +32,9 @@ class DALANRouter:
         self.entries = [e for e in kb["entries"] if e["id"] != "fallback"]
         self.fallback = next(e for e in kb["entries"] if e["id"] == "fallback")
         self.norm = Normalizer(kb_vocab(kb), use_lexicon=use_csn, use_affix=use_csn)
-        self.lex = LexicalChannel(self.entries)
-        self.char = CharChannel(self.entries) if use_char else None
+        core = [not e.get("scope") for e in self.entries]
+        self.lex = LexicalChannel(self.entries, core)
+        self.char = CharChannel(self.entries, core) if use_char else None
         self.k_ctx = k_ctx
         self.per_language = per_language
         self.feature_mask = feature_mask
@@ -41,12 +42,24 @@ class DALANRouter:
         self.cal = LogisticCalibrator()
         self.th = BucketThresholds(eps=eps, delta=delta)
         self.ids = [e["id"] for e in self.entries]
+        # Scope gates: entries with a 'scope' cue list are ranked only when the query contains a cue word
+        self.gates = [set(e["scope"]) if e.get("scope") else None for e in self.entries]
+        self.gated = np.array([g is not None for g in self.gates])
 
     # ---------------------------------------------------------------- scoring
-    def _analyze(self, query):
-        nq = self.norm(query)
+    def channel_scores(self, nq):
+        """Lexical and character scores, with scope-gated entries zeroed when the query has none of their cues."""
         lex = self.lex.scores(nq)
         char = self.char.scores(nq) if self.char else np.zeros_like(lex)
+        if self.gated.any():
+            words = set(nq.folded.replace("-", " ").split()) | set(nq.tokens)
+            closed = np.array([g is not None and not (g & words) for g in self.gates])
+            lex, char = np.where(closed, 0.0, lex), np.where(closed, 0.0, char)
+        return lex, char
+
+    def _analyze(self, query):
+        nq = self.norm(query)
+        lex, char = self.channel_scores(nq)
         fused = fuse([lex, char], self.rrf_weights) if self.char else lex.copy()
         # Tie-break fused ranks by lexical score so strong lexical evidence wins equal RRF ranks
         fused = fused + 1e-6 * lex / (1 + lex.max())

@@ -1,0 +1,16 @@
+{"id": "test_research-0", "q": "what do bantayan farms do with dried manure", "lang": "en", "gold": ["res-manure-uses"]}
+{"id": "test_research-1", "q": "selling price of layer manure per sack bantayan", "lang": "en", "gold": ["res-manure-uses"]}
+{"id": "test_research-2", "q": "Baho kaayo ang ipot sa among farm sa Santa Fe, unsay buhaton?", "lang": "ceb", "gold": ["res-manure-problems"]}
+{"id": "test_research-3", "q": "how many sacks of manure do bantayan farms make each week", "lang": "en", "gold": ["res-manure-survey"]}
+{"id": "test_research-4", "q": "worm infection rate in bantayan island layers", "lang": "en", "gold": ["res-parasite-prevalence"]}
+{"id": "test_research-5", "q": "Ilang porsyento ng mga farm sa Bantayan ang may bulate?", "lang": "tl", "gold": ["res-parasite-prevalence"]}
+{"id": "test_research-6", "q": "bantayan deworming frequency study", "lang": "en", "gold": ["res-parasite-deworming"]}
+{"id": "test_research-7", "q": "how to prevent raillietina tapeworm in hens", "lang": "en", "gold": ["res-parasite-control"]}
+{"id": "test_research-8", "q": "are bantayan layers immune to newcastle based on blood tests", "lang": "en", "gold": ["res-serology-results"]}
+{"id": "test_research-9", "q": "Pila ka farm sa Bantayan ang nagbakuna og Newcastle?", "lang": "ceb", "gold": ["res-serology-vaccination"]}
+{"id": "test_research-10", "q": "can vaccinated chickens still get newcastle disease", "lang": "en", "gold": ["res-serology-newcastle-risk"]}
+{"id": "test_research-11", "q": "what breed do most cebu layer farms use", "lang": "en", "gold": ["res-cebu-farm-profile"]}
+{"id": "test_research-12", "q": "Ilang beses kinokolekta ang itlog sa mga farm sa Cebu?", "lang": "tl", "gold": ["res-cebu-production"]}
+{"id": "test_research-13", "q": "biosecurity weaknesses of cebu layer farms", "lang": "en", "gold": ["res-cebu-biosecurity"]}
+{"id": "test_research-14", "q": "Naghatag ba og booster nga bakuna ang mga farm sa Cebu?", "lang": "ceb", "gold": ["res-cebu-health-practices"]}
+{"id": "test_research-15", "q": "what dewormers do cebu layer farms use", "lang": "en", "gold": ["res-cebu-health-practices"]}

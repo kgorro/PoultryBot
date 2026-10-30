@@ -283,3 +283,45 @@
 {"id": "dev-282", "q": "best feed for bangus sa fishpond?", "lang": "mix", "gold": ["OOD"]}
 {"id": "dev-283", "q": "unsaon pag-apply og visa to Korea?", "lang": "mix", "gold": ["OOD"]}
 {"id": "dev-284", "q": "sabong derby schedule this week", "lang": "mix", "gold": ["OOD"]}
+{"id": "dev-285", "q": "manure handling survey results bantayan layer farms", "lang": "en", "gold": ["res-manure-survey"]}
+{"id": "dev-286", "q": "what tools do bantayan farms use to remove manure", "lang": "en", "gold": ["res-manure-survey"]}
+{"id": "dev-287", "q": "Unsaon sa mga layer farm sa Bantayan pagkuha sa ipot?", "lang": "ceb", "gold": ["res-manure-survey"]}
+{"id": "dev-288", "q": "price of a sack of dried manure in bantayan", "lang": "en", "gold": ["res-manure-uses"]}
+{"id": "dev-289", "q": "who buys chicken manure from bantayan layer farms", "lang": "en", "gold": ["res-manure-uses"]}
+{"id": "dev-290", "q": "Magkano ang isang sako ng ipot sa Bantayan?", "lang": "tl", "gold": ["res-manure-uses"]}
+{"id": "dev-291", "q": "biggest manure problem in the bantayan survey", "lang": "en", "gold": ["res-manure-problems"]}
+{"id": "dev-292", "q": "manure drying during rain on bantayan farms", "lang": "en", "gold": ["res-manure-problems"]}
+{"id": "dev-293", "q": "Lisod mamala ang ipot sa among farm sa Bantayan", "lang": "ceb", "gold": ["res-manure-problems"]}
+{"id": "dev-294", "q": "do bantayan farmers know manure can be used as fuel", "lang": "en", "gold": ["res-manure-knowledge"]}
+{"id": "dev-295", "q": "manure for aquaculture survey bantayan", "lang": "en", "gold": ["res-manure-knowledge"]}
+{"id": "dev-296", "q": "Ano ang alam ng mga magsasaka sa Bantayan sa gamit ng dumi ng manok?", "lang": "tl", "gold": ["res-manure-knowledge"]}
+{"id": "dev-297", "q": "percent of bantayan farms with worms in layers", "lang": "en", "gold": ["res-parasite-prevalence"]}
+{"id": "dev-298", "q": "most common parasite found in bantayan layers", "lang": "en", "gold": ["res-parasite-prevalence"]}
+{"id": "dev-299", "q": "Pila ka porsyento sa manok sa Bantayan ang naay bitok?", "lang": "ceb", "gold": ["res-parasite-prevalence"]}
+{"id": "dev-300", "q": "is deworming every 3 months working on bantayan farms", "lang": "en", "gold": ["res-parasite-deworming"]}
+{"id": "dev-301", "q": "dewormer resistance study bantayan", "lang": "en", "gold": ["res-parasite-deworming"]}
+{"id": "dev-302", "q": "Gumagana pa ba ang purga sa mga manok sa Bantayan?", "lang": "tl", "gold": ["res-parasite-deworming"]}
+{"id": "dev-303", "q": "tapeworm in layers from beetles", "lang": "en", "gold": ["res-parasite-control"]}
+{"id": "dev-304", "q": "heterakis cecal worm and blackhead", "lang": "en", "gold": ["res-parasite-control"]}
+{"id": "dev-305", "q": "Unsaon paglikay sa tapeworm sa manok?", "lang": "ceb", "gold": ["res-parasite-control"]}
+{"id": "dev-306", "q": "gumboro antibody levels in bantayan layers", "lang": "en", "gold": ["res-serology-results"]}
+{"id": "dev-307", "q": "serology results newcastle bronchitis gumboro bantayan", "lang": "en", "gold": ["res-serology-results"]}
+{"id": "dev-308", "q": "Igo ba ang antibody sa manok sa Bantayan batok sa Gumboro?", "lang": "ceb", "gold": ["res-serology-results"]}
+{"id": "dev-309", "q": "how many bantayan farms give gumboro vaccine", "lang": "en", "gold": ["res-serology-vaccination"]}
+{"id": "dev-310", "q": "why antibodies to gumboro without vaccinating", "lang": "en", "gold": ["res-serology-vaccination"]}
+{"id": "dev-311", "q": "Ilan sa mga farm sa Bantayan ang nagbabakuna ng IBD?", "lang": "tl", "gold": ["res-serology-vaccination"]}
+{"id": "dev-312", "q": "newcastle outbreak in a vaccinated layer flock", "lang": "en", "gold": ["res-serology-newcastle-risk"]}
+{"id": "dev-313", "q": "vaccinated hens still dying of newcastle", "lang": "en", "gold": ["res-serology-newcastle-risk"]}
+{"id": "dev-314", "q": "Nabakunahan na ang among manok pero naa gihapoy Newcastle", "lang": "ceb", "gold": ["res-serology-newcastle-risk"]}
+{"id": "dev-315", "q": "how big are most layer farms in cebu", "lang": "en", "gold": ["res-cebu-farm-profile"]}
+{"id": "dev-316", "q": "average egg trays per day cebu layer farm survey", "lang": "en", "gold": ["res-cebu-farm-profile"]}
+{"id": "dev-317", "q": "Gaano kalaki ang karaniwang layer farm sa Cebu?", "lang": "tl", "gold": ["res-cebu-farm-profile"]}
+{"id": "dev-318", "q": "cage size used by cebu layer farms", "lang": "en", "gold": ["res-cebu-production"]}
+{"id": "dev-319", "q": "how many hens per cage do cebu farms use", "lang": "en", "gold": ["res-cebu-production"]}
+{"id": "dev-320", "q": "Pila ka beses magpakaon ang mga layer farm sa Cebu kada adlaw?", "lang": "ceb", "gold": ["res-cebu-production"]}
+{"id": "dev-321", "q": "how many cebu farms have a visitor logbook", "lang": "en", "gold": ["res-cebu-biosecurity"]}
+{"id": "dev-322", "q": "footbath and fence use cebu poultry survey", "lang": "en", "gold": ["res-cebu-biosecurity"]}
+{"id": "dev-323", "q": "Ilang farm sa Cebu ang may rodent control?", "lang": "tl", "gold": ["res-cebu-biosecurity"]}
+{"id": "dev-324", "q": "do cebu layer farms give booster vaccines", "lang": "en", "gold": ["res-cebu-health-practices"]}
+{"id": "dev-325", "q": "antibiotics used by cebu layer farms survey", "lang": "en", "gold": ["res-cebu-health-practices"]}
+{"id": "dev-326", "q": "Unsa nga antibiotic ang kasagaran gamiton sa mga farm sa Cebu?", "lang": "ceb", "gold": ["res-cebu-health-practices"]}

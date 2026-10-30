@@ -1,7 +1,12 @@
 """PoultryBot backend: a fast local assistant for poultry raisers.
 
+Startup: loads the prebuilt dump in dist/ (python -m dalan.dump) instead of refitting the router. If the dump
+is missing or older than the KB or code, it refits and says so.
+
 Per question (cheapest path first):
-  1. Exact cache        the same normalized question was answered before                ~0 ms
+  1. Exact cache        the same normalized question is in the dump, or was answered     ~0 ms
+                        before (LLM answers are saved to dist/llm_answers.jsonl and
+                        reloaded at startup, so each generated answer is paid for once)
   2. DALAN router       code-switch normalization, lexical + character retrieval,       ~1 ms
                         calibrated confidence, per-language risk-controlled thresholds
        skip      answer straight from the verified knowledge base (no LLM call)
@@ -14,6 +19,7 @@ The LLM is any OpenAI-compatible server on the local machine:
   llama.cpp:  llama-server -m model.gguf --port 8080   LLM_BASE_URL=http://localhost:8080/v1
   vLLM:       vllm serve <model> --port 8000           LLM_BASE_URL=http://localhost:8000/v1
 """
+import hashlib
 import json
 import os
 import sys
@@ -27,7 +33,8 @@ from pydantic import BaseModel
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
-from dalan import DALANRouter  # noqa: E402
+from dalan.dump import load as load_dump  # noqa: E402
+from dalan.export import fitted_router  # noqa: E402
 from dalan.normalize import fold  # noqa: E402
 
 KB = json.loads((REPO / "kb" / "kb.json").read_text(encoding="utf-8"))
@@ -35,21 +42,57 @@ LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:11434/v1")
 LLM_MODEL = os.getenv("LLM_MODEL", "qwen2.5:7b-instruct")
 DALAN_EPS = float(os.getenv("DALAN_EPS", "0.05"))
 
-SYSTEM_PROMPT = (
-    "You are PoultryBot, an assistant for small and medium poultry raisers in the Philippines. "
-    "Answer ONLY from the CONTEXT. If the context does not answer the question, say you are not sure and suggest the "
-    "municipal agriculture office or a licensed veterinarian. Never give drug or vaccine doses; tell the farmer to "
-    "follow the product label and a veterinarian. For sudden deaths or signs of Newcastle disease or bird flu, tell "
-    "them to stop moving birds and report to the municipal or provincial veterinary office. Keep answers under 120 "
-    "words, practical, and in the same language as the question (English, Cebuano, or Tagalog)."
-)
+SYSTEM_PROMPT = (REPO / "kb" / "system_prompt.txt").read_text(encoding="utf-8").strip()
 
-calib = []
-for name in ("dev", "test"):
-    calib += [json.loads(l) for l in (REPO / "data" / f"{name}.jsonl").read_text(encoding="utf-8").splitlines()]
-router = DALANRouter(KB, eps=DALAN_EPS).fit(calib)
-health_ids = {e["id"] for e in KB["entries"] if e["group"] == "health"}
+DIST = REPO / "dist"
+_t0 = time.perf_counter()
+_dump = load_dump(DALAN_EPS, DIST)
+if _dump:
+    router, _routes = _dump
+    STARTUP = f"loaded dump from dist/ in {(time.perf_counter() - _t0) * 1000:.0f} ms"
+else:
+    router = fitted_router(DALAN_EPS)
+    _routes = {}
+    STARTUP = f"no current dump, refitted in {(time.perf_counter() - _t0) * 1000:.0f} ms (run: python -m dalan.dump)"
+print("PoultryBot:", STARTUP, flush=True)
+BY_ID = {e["id"]: e for e in KB["entries"]}
+health_ids = {e["id"] for e in KB["entries"] if e["group"] == "health" or e["id"].startswith(("res-parasite", "res-serology"))}
+KB_HASH = hashlib.sha256((REPO / "kb" / "kb.json").read_bytes()).hexdigest()[:16]
+LLM_STORE = DIST / "llm_answers.jsonl"
+
+
+def render(entry, ranked):
+    """KB answer text. Research entries from one study are close siblings, so name the related findings too."""
+    text = entry["answer"]
+    if entry["group"] == "research":
+        rel = [BY_ID[i]["title"] for i in ranked if i != entry["id"] and BY_ID[i]["group"] == "research"]
+        if rel:
+            text += "\n\nRelated findings you can ask about: " + "; ".join(rel) + "."
+    return text
+
+
+def _out(text, entry, route, p, bucket, ranked):
+    return dict(answer=text, title=entry["title"], entry_id=entry["id"], route=route, confidence=round(p, 3),
+                language_bucket=bucket, sources=ranked)
+
+
+# Answer cache: precomputed skip/abstain routes from the dump, plus LLM answers saved by earlier runs
 cache: dict[str, dict] = {}
+for key, r in _routes.items():
+    if r["action"] == "skip":
+        e = BY_ID[r["entry_id"]]
+        cache[key] = _out(render(e, r["ranked_ids"]), e, "skip", r["p"], r["bucket"], r["ranked_ids"])
+if LLM_STORE.exists():
+    for line in LLM_STORE.read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        if row.get("kb") == KB_HASH:
+            cache[row["key"]] = row["out"]
+
+
+def remember_llm(key, out):
+    DIST.mkdir(exist_ok=True)
+    with LLM_STORE.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(dict(key=key, kb=KB_HASH, out=out), ensure_ascii=False) + "\n")
 
 
 def build_messages(question, context):
@@ -100,11 +143,12 @@ async def answer(question: str) -> dict:
                     f"{d['entry']['answer']}\n\nRelated topics: {others}.")
             route = "skip-degraded"
     else:
-        text = d["entry"]["answer"]
-    out = dict(answer=text, title=d["entry"]["title"], entry_id=d["entry"]["id"], route=route,
-               confidence=round(d["p"], 3), language_bucket=d["bucket"], sources=d["ranked_ids"])
-    if route != "abstain":
+        text = render(d["entry"], d["ranked_ids"]) if route == "skip" else d["entry"]["answer"]
+    out = _out(text, d["entry"], route, d["p"], d["bucket"], d["ranked_ids"])
+    if route in ("skip", "generate"):
         cache[key] = out
+        if route == "generate":
+            remember_llm(key, out)
     out["ms"] = round((time.perf_counter() - t0) * 1000, 2)
     return out
 
@@ -128,6 +172,11 @@ async def chat_stream(body: Ask):
     if d["action"] != "generate":
         return PlainTextResponse(d["entry"]["answer"])
     return StreamingResponse(llm_stream(body.question, d["context"]), media_type="text/plain")
+
+
+@app.get("/health")
+def health():
+    return dict(startup=STARTUP, entries=len(KB["entries"]), cached_answers=len(cache))
 
 
 @app.get("/topics")

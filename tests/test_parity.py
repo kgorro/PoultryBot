@@ -18,9 +18,10 @@ def main():
     model_path = ROOT / "web" / "model.json"
     export(router, model_path)
     queries = []
-    for name in ("dev", "test"):
+    for name in ("dev", "test", "test_research"):
         queries += [json.loads(l)["q"] for l in (ROOT / "data" / f"{name}.jsonl").read_text(encoding="utf-8").splitlines()]
-    queries += ["", "???", "Unsaon pag-atiman sa piso nga nag-ubo-ubo?", "BROILER feed!!!", "nag-drop ang eggs"]
+    queries += ["", "???", "Unsaon pag-atiman sa piso nga nag-ubo-ubo?", "BROILER feed!!!", "nag-drop ang eggs",
+                "Pila ang presyo sa ipot sa Bantayan?", "bantayan", "study"]
     js = """
 const fs=require('fs'); const D=require(process.argv[1]);
 const M=JSON.parse(fs.readFileSync(process.argv[2],'utf8')); const kb=JSON.parse(fs.readFileSync(process.argv[3],'utf8'));

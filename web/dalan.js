@@ -141,12 +141,18 @@
               nq.csi, nq.oov, Math.log1p(nq.nTokens), nq.lexHit, nq.csi * sat, nq.oov * c1, 1 / (1 + rankLinC)];
     }
     const entries = kb.entries.filter(e => e.id !== "fallback"), fallback = kb.entries.find(e => e.id === "fallback");
+    const GATES = (M.gates || []).map(g => (g ? g : null));
     const byId = Object.fromEntries(entries.map(e => [e.id, e]));
 
     function route(query) {
       const t0 = (typeof performance !== "undefined" ? performance : Date).now();
       const nq = normalize(query);
-      const lex = lexScores(nq), ch = charScores(nq);
+      let lex = lexScores(nq), ch = charScores(nq);
+      if (GATES.some(g => g)) {
+        const words = new Set([...nq.folded.replace(/-/g, " ").split(" ").filter(Boolean), ...nq.tokens]);
+        const closed = GATES.map(g => !!g && !g.some(c => words.has(c)));
+        lex = lex.map((v, i) => (closed[i] ? 0 : v)); ch = ch.map((v, i) => (closed[i] ? 0 : v));
+      }
       const rl = ranks(lex), rc = ranks(ch), lmax = Math.max(...lex);
       const fused = lex.map((v, i) => 1 / (10 + 1 + rl[i]) + 1 / (10 + 1 + rc[i]) + 1e-6 * v / (1 + lmax));
       const x = features(lex, ch, fused, nq);
