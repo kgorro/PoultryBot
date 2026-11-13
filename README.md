@@ -98,6 +98,13 @@ Open web/poultrybot.html in a browser for the demo, no server needed. After chan
     python -m dalan.export && python web/build_page.py
     python -m dalan.dump                        # refresh the backend dump
 
+## Deploying with Docker
+
+    git clone https://github.com/kgorro/PoultryBot.git ~/poultrybot && cd ~/poultrybot
+    cp .env.example .env && bash deploy/install.sh
+
+This runs the bot and a local LLM (Ollama) with Docker Compose, with optional HTTPS through Caddy. Sizing, domain setup, and updates: [docs/DEPLOY.md](docs/DEPLOY.md).
+
 ## Adding knowledge from papers or extension materials
 
 Write a markdown pack in kb/sources/ (format in [kb/sources/README.md](kb/sources/README.md)): one `##` section per topic with keywords, sample questions in English, Cebuano, and Tagalog, and the answer. Then run `python kb/build_kb.py` and `python -m dalan.dump`.

@@ -58,7 +58,7 @@ print("PoultryBot:", STARTUP, flush=True)
 BY_ID = {e["id"]: e for e in KB["entries"]}
 health_ids = {e["id"] for e in KB["entries"] if e["group"] == "health" or e["id"].startswith(("res-parasite", "res-serology"))}
 KB_HASH = hashlib.sha256((REPO / "kb" / "kb.json").read_bytes()).hexdigest()[:16]
-LLM_STORE = DIST / "llm_answers.jsonl"
+LLM_STORE = Path(os.getenv("LLM_STORE", str(DIST / "llm_answers.jsonl")))
 
 
 def render(entry, ranked):
@@ -90,7 +90,7 @@ if LLM_STORE.exists():
 
 
 def remember_llm(key, out):
-    DIST.mkdir(exist_ok=True)
+    LLM_STORE.parent.mkdir(parents=True, exist_ok=True)
     with LLM_STORE.open("a", encoding="utf-8") as f:
         f.write(json.dumps(dict(key=key, kb=KB_HASH, out=out), ensure_ascii=False) + "\n")
 
