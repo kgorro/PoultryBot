@@ -40,13 +40,13 @@ Two query sets were written before tuning: a development set for tuning and cros
 | Always-RAG (LLM for every query) | 61.4% | 17.4% | 57.6% | 19.1% | 100% |
 | Fixed-threshold lexical router | 58.2% | 11.8% | 49.5% | 21.7% | 2.0% |
 | Normalization + fixed thresholds | 88.5% | 11.5% | 75.3% | 24.2% | 1.4% |
-| DALAN without character channel | 89.5% | 6.0% | 82.2% | 8.8% | 16.3% |
-| **DALAN (full)** | **89.8%** | **5.9%** | **75.9%** | **15.7%** | **4.8%** |
+| DALAN without character channel | 89.2% | 6.0% | 81.6% | 9.5% | 16.3% |
+| **DALAN (full)** | **89.7%** | **5.9%** | **75.9%** | **15.7%** | **4.8%** |
 
 What the held-out test shows:
 - Code-switch normalization matters most. On test, accuracy on Cebuano queries rose from 11% to 71%, and on Tagalog from 20% to 74%, over the fixed lexical router.
 - DALAN generalized worse than cross-validation suggested. Top-1 retrieval fell from 92% on dev, which the keywords and lexicon were tuned on, to 85% on test. The calibrator learned its confidence from that tuned data, so it skipped too often on new phrasings: 15.0% of test answers were confident wrong answers.
-- On test, removing the character channel gave fewer wrong answers (8.8% vs 15.7%) at the cost of more LLM calls. That ablation was not chosen in advance, so treat it as a lead to confirm, not a result.
+- On test, removing the character channel gave fewer wrong answers (9.5% vs 15.7%) at the cost of more LLM calls. That ablation was not chosen in advance, so treat it as a lead to confirm, not a result.
 - The lesson for deployment: tune keywords and the lexicon on one set of queries, and fit the calibrator on a separate set that tuning never saw.
 
 - Adding the research packs left top-1 retrieval on the original test set unchanged (the scope gate below keeps them out of everyday questions). Test accuracy went from 77.7% to 75.9% and wrong answers from 14.4% to 15.7% because the 42 new dev questions are easy and made the calibrator more confident. The thresholds were not retuned on the test set to win this back.

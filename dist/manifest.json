@@ -1,11 +1,11 @@
 {
- "built": "2026-11-17 11:37",
+ "built": "2026-11-17 12:01",
  "eps": 0.05,
  "entries": 78,
  "cached_questions": 671,
- "fit_seconds": 0.55,
+ "fit_seconds": 0.57,
  "files": {
-  "kb/kb.json": "39b1cc01e84eb0c4",
+  "kb/kb.json": "188d3025a9563e17",
   "kb/system_prompt.txt": "e3bdfa989db95f6b",
   "data/dev.jsonl": "87bcde2156a27807",
   "data/test.jsonl": "d639661b0dff81ba",

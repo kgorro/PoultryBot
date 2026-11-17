@@ -70,4 +70,4 @@ Questions:
 
 When shown a list, surveyed Bantayan farmers recognized these uses of chicken manure: saleable product (63.2%), fertilizer (55.9%), source of nutrients (55.1%), aquaculture (34.6%), cattle feed (25.0%), fuel (25.0%), and fish pond use (6.6%). 58.8% said they were not aware of other uses.
 Fertilizer and sale are the established uses. Feeding manure to animals or putting it in fish ponds carries disease and water-quality risks, so ask your municipal agriculture office or BFAR before trying these.
-Cues: fish, fuel, aquaculture, ibang, gawas
+Cues: fishpond, fuel, aquaculture, ibang, gawas

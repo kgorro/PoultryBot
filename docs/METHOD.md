@@ -26,7 +26,7 @@ Figures below are from the current run (development set of 327 queries, with the
 
 1. Normalization is what makes local-language queries answerable. On the test set, Cebuano accuracy went from 11% (fixed lexical router) to 71%, and Tagalog from 20% to 74%.
 2. Calibrating on tuned data inflates confidence. Top-1 retrieval was 92% on dev and 85% on test. DALAN's skip thresholds, fitted on dev, admitted 15.0% confident wrong answers on test, against 5.4% in dev cross-validation. Cross-validation could not reveal this, because the same queries guided the keyword and lexicon edits.
-3. The character channel helped on dev but hurt on test (wrong answers 8.8% without it, 15.7% with it). This comparison was not planned before seeing the test results, so it needs confirmation on new data.
+3. The character channel helped on dev but hurt on test (wrong answers 9.5% without it, 15.7% with it). This comparison was not planned before seeing the test results, so it needs confirmation on new data.
 4. DALAN still beat the baselines on the test set while calling the LLM on 4.8% of questions. Against the fixed lexical router it gained 26.4 accuracy points (95% CI +18.8 to +34.2) and had 6.0 points fewer wrong answers (95% CI −11.2 to −1.2). Against always-RAG it gained 18.3 accuracy points (95% CI +8.6 to +27.7); its 3.4-point drop in wrong answers was not significant (95% CI −9.1 to +2.7).
 
 ## Local research packs (2026-10)

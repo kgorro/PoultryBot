@@ -7,7 +7,7 @@ One Caddy server owns ports 80 and 443 and sends each request to the right bot. 
 | Bot | Subdomain | Path |
 |---|---|---|
 | Landing page | https://cccbdai.tech/ | |
-| JuanVet, the poultry bot (port 8000) | https://juanvet.cccbdai.tech/ | https://cccbdai.tech/juanvet/ |
+| JuanVet, the poultry bot (port 8000) | https://juangpt.cccbdai.tech/ | https://cccbdai.tech/juangpt/ |
 | Sugbo Guide (port 8001) | https://sugbo.cccbdai.tech/ | https://cccbdai.tech/sugbo/ |
 
 Certificates come from Let's Encrypt and renew automatically.
@@ -19,10 +19,10 @@ At your domain registrar, add three A records pointing to the VPS IP:
 | Type | Name | Value |
 |---|---|---|
 | A | @ | 189.31.32.165 |
-| A | juanvet | 189.31.32.165 |
+| A | juangpt | 189.31.32.165 |
 | A | sugbo | 189.31.32.165 |
 
-(Or one wildcard record `*` instead of the last two, so future projects need no DNS change.) Check with `nslookup juanvet.cccbdai.tech` before step 2; it can take a few minutes to an hour.
+(Or one wildcard record `*` instead of the last two, so future projects need no DNS change.) Check with `nslookup juangpt.cccbdai.tech` before step 2; it can take a few minutes to an hour.
 
 ## 2. Start the gateway
 
@@ -66,7 +66,7 @@ Path routing works when the app uses relative URLs (fetch("chat"), not fetch("/c
 
 ## Facebook Messenger
 
-Webhook URL: https://juanvet.cccbdai.tech/messenger (or https://sugbo.cccbdai.tech/messenger).
+Webhook URL: https://juangpt.cccbdai.tech/messenger (or https://sugbo.cccbdai.tech/messenger).
 
 ## Troubleshooting
 

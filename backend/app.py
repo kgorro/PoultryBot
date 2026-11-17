@@ -44,6 +44,8 @@ DALAN_EPS = float(os.getenv("DALAN_EPS", "0.05"))
 
 SYSTEM_PROMPT = (REPO / "kb" / "system_prompt.txt").read_text(encoding="utf-8").strip()
 
+# When DALAN would decline a poultry question, answer with the LLM from the closest topics instead (0 to turn off)
+NEAREST_TO_LLM = os.getenv("NEAREST_TO_LLM", "1") == "1"
 DIST = REPO / "dist"
 _t0 = time.perf_counter()
 _dump = load_dump(DALAN_EPS, DIST)
@@ -95,24 +97,48 @@ def remember_llm(key, out):
         f.write(json.dumps(dict(key=key, kb=KB_HASH, out=out), ensure_ascii=False) + "\n")
 
 
-def build_messages(question, context):
+NEAREST_NOTE = ("These topics are only the closest matches and may not fully cover the question. "
+                "Answer the parts they cover, say plainly what they do not cover, and never guess doses.\n\n")
+
+# Nearest-topic answers are only for poultry. A question about another animal with no bird word is declined,
+# so a pig or dog question never gets a chicken answer.
+OTHER_ANIMALS = set("pig pigs swine hog hogs piglet piglets baboy biik cow cows cattle carabao baka kabaw goat goats "
+                    "kanding kambing dog dogs iro aso cat cats iring pusa horse kabayo rabbit koneho tilapia".split())
+BIRD_WORDS = set("chicken chickens manok broiler broilers layer layers hen hens rooster cock chick chicks sisiw piso "
+                 "duck ducks itik pato quail pugo turkey pabo goose gansa bird birds poultry egg eggs itlog "
+                 "native gamefowl".split())
+
+
+def other_animal(question):
+    words = set(fold(question).replace("-", " ").split())
+    return bool(words & OTHER_ANIMALS) and not words & BIRD_WORDS
+
+
+def nearest_ok(question):
+    if other_animal(question):
+        return False
+    lex, _ = router.channel_scores(router.norm(question))
+    return float(lex.max()) > 0
+
+
+def build_messages(question, context, nearest=False):
     ctx = "\n\n".join(f"[{e['title']}]\n{e['answer']}" for e in context)
     return [{"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": f"CONTEXT:\n{ctx}\n\nQUESTION: {question}"}]
+            {"role": "user", "content": (NEAREST_NOTE if nearest else "") + f"CONTEXT:\n{ctx}\n\nQUESTION: {question}"}]
 
 
-async def llm_complete(question, context):
+async def llm_complete(question, context, nearest=False):
     async with httpx.AsyncClient(timeout=90) as client:
         r = await client.post(f"{LLM_BASE_URL}/chat/completions", json=dict(
-            model=LLM_MODEL, messages=build_messages(question, context), temperature=0.2, max_tokens=300))
+            model=LLM_MODEL, messages=build_messages(question, context, nearest), temperature=0.2, max_tokens=300))
         r.raise_for_status()
         return r.json()["choices"][0]["message"]["content"].strip()
 
 
-async def llm_stream(question, context):
+async def llm_stream(question, context, nearest=False):
     async with httpx.AsyncClient(timeout=90) as client:
         async with client.stream("POST", f"{LLM_BASE_URL}/chat/completions", json=dict(
-                model=LLM_MODEL, messages=build_messages(question, context), temperature=0.2, max_tokens=300,
+                model=LLM_MODEL, messages=build_messages(question, context, nearest), temperature=0.2, max_tokens=300,
                 stream=True)) as r:
             async for line in r.aiter_lines():
                 if line.startswith("data: ") and not line.endswith("[DONE]"):
@@ -131,9 +157,16 @@ async def answer(question: str) -> dict:
         return {**cache[key], "route": "cache", "ms": round((time.perf_counter() - t0) * 1000, 2)}
     d = router.route(question)
     route = d["action"]
-    if route == "generate":
+    if other_animal(question):
+        # Another species and no bird word: decline rather than give a chicken answer to a pig or dog question
+        d = {**d, "action": "abstain", "entry": BY_ID["fallback"]}
+        route = "abstain"
+    elif route == "abstain" and NEAREST_TO_LLM and nearest_ok(question):
+        route = "generate-nearest"   # not confident, but on a poultry topic: let the LLM use the closest topics
+        d = {**d, "entry": d["context"][0]}
+    if route in ("generate", "generate-nearest"):
         try:
-            text = await llm_complete(question, d["context"])
+            text = await llm_complete(question, d["context"], nearest=route == "generate-nearest")
             if any(e["id"] in health_ids for e in d["context"][:1]) and "veterinar" not in text.lower():
                 text += VET_NOTE
         except Exception:
@@ -145,9 +178,9 @@ async def answer(question: str) -> dict:
     else:
         text = render(d["entry"], d["ranked_ids"]) if route == "skip" else d["entry"]["answer"]
     out = _out(text, d["entry"], route, d["p"], d["bucket"], d["ranked_ids"])
-    if route in ("skip", "generate"):
+    if route in ("skip", "generate", "generate-nearest"):
         cache[key] = out
-        if route == "generate":
+        if route != "skip":
             remember_llm(key, out)
     out["ms"] = round((time.perf_counter() - t0) * 1000, 2)
     return out
@@ -169,9 +202,12 @@ async def chat(body: Ask):
 async def chat_stream(body: Ask):
     """Streams tokens on the generate route so the first words appear immediately."""
     d = router.route(body.question)
-    if d["action"] != "generate":
+    if other_animal(body.question):
+        return PlainTextResponse(BY_ID["fallback"]["answer"])
+    nearest = d["action"] == "abstain" and NEAREST_TO_LLM and nearest_ok(body.question)
+    if d["action"] != "generate" and not nearest:
         return PlainTextResponse(d["entry"]["answer"])
-    return StreamingResponse(llm_stream(body.question, d["context"]), media_type="text/plain")
+    return StreamingResponse(llm_stream(body.question, d["context"], nearest), media_type="text/plain")
 
 
 @app.get("/health")
