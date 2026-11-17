@@ -1,13 +1,13 @@
 # HTTPS gateway for all bots (cccbdai.tech)
 
-The poultry bot is shown to users as JuanVet; the repository and containers keep the name poultrybot.
+The poultry bot is shown to users as JuanGPT; the repository and containers keep the name poultrybot.
 
 One Caddy server owns ports 80 and 443 and sends each request to the right bot. Every bot is reachable two ways:
 
 | Bot | Subdomain | Path |
 |---|---|---|
 | Landing page | https://cccbdai.tech/ | |
-| JuanVet, the poultry bot (port 8000) | https://juangpt.cccbdai.tech/ | https://cccbdai.tech/juangpt/ |
+| JuanGPT, the poultry bot (port 8000) | https://juangpt.cccbdai.tech/ | https://cccbdai.tech/juangpt/ |
 | Sugbo Guide (port 8001) | https://sugbo.cccbdai.tech/ | https://cccbdai.tech/sugbo/ |
 
 Certificates come from Let's Encrypt and renew automatically.

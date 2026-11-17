@@ -1,12 +1,12 @@
 {
- "built": "2026-11-17 12:01",
+ "built": "2026-11-17 12:08",
  "eps": 0.05,
  "entries": 78,
  "cached_questions": 671,
  "fit_seconds": 0.57,
  "files": {
-  "kb/kb.json": "188d3025a9563e17",
-  "kb/system_prompt.txt": "e3bdfa989db95f6b",
+  "kb/kb.json": "1d87b5fa934034fb",
+  "kb/system_prompt.txt": "489843b594a4a24e",
   "data/dev.jsonl": "87bcde2156a27807",
   "data/test.jsonl": "d639661b0dff81ba",
   "dalan/normalize.py": "2dee5c328b8a1054",

@@ -21,5 +21,5 @@ echo "Waiting for certificates..."; sleep 8
 $SUDO docker compose logs --tail 15 caddy | grep -iE "certificate obtained|error|failed" || true
 echo
 echo "Main page:   https://$DOMAIN/"
-echo "JuanVet:     https://juangpt.$DOMAIN/   or  https://$DOMAIN/juangpt/"
+echo "JuanGPT:     https://juangpt.$DOMAIN/   or  https://$DOMAIN/juangpt/"
 echo "Sugbo Guide: https://sugbo.$DOMAIN/     or  https://$DOMAIN/sugbo/"

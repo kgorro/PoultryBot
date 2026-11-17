@@ -1,4 +1,4 @@
-# PoultryBot (JuanVet)
+# PoultryBot (JuanGPT)
 
 A fast, low-cost assistant for small and medium poultry raisers in the Philippines. It answers questions about broilers, layers, native and free-range chickens, ducks, and quail in English, Cebuano, Tagalog, and mixes of them. It runs on modest hardware with a small local LLM, and most answers never call the LLM.
 
