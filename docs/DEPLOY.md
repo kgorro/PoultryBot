@@ -1,6 +1,6 @@
 # Deploying PoultryBot on a VPS with Docker
 
-Two containers: the bot (FastAPI, DALAN router, knowledge dump) and Ollama (the local LLM). Caddy is optional and adds HTTPS when you have a domain.
+Two containers: the bot (FastAPI, DALAN router, knowledge dump) and Ollama (the local LLM). Caddy is optional and adds HTTPS when you have a domain. To serve several bots under one domain (cccbdai.tech), use the gateway instead: [GATEWAY.md](GATEWAY.md).
 
 ## VPS size
 

@@ -1,0 +1,18 @@
+# One HTTPS front door for all CCCBDAI bots on this VPS.
+# Caddy uses the host network so it can reach each bot on 127.0.0.1 and owns ports 80 and 443.
+# Setup: docs/GATEWAY.md
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    network_mode: host
+    env_file: .env
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./site:/srv:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:      # certificates; keep this volume
+  caddy_config:
