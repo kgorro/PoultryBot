@@ -1,11 +1,13 @@
 # HTTPS gateway for all bots (cccbdai.tech)
 
+The poultry bot is shown to users as JuanVet; the repository and containers keep the name poultrybot.
+
 One Caddy server owns ports 80 and 443 and sends each request to the right bot. Every bot is reachable two ways:
 
 | Bot | Subdomain | Path |
 |---|---|---|
 | Landing page | https://cccbdai.tech/ | |
-| PoultryBot (port 8000) | https://poultry.cccbdai.tech/ | https://cccbdai.tech/poultry/ |
+| JuanVet, the poultry bot (port 8000) | https://juanvet.cccbdai.tech/ | https://cccbdai.tech/juanvet/ |
 | Sugbo Guide (port 8001) | https://sugbo.cccbdai.tech/ | https://cccbdai.tech/sugbo/ |
 
 Certificates come from Let's Encrypt and renew automatically.
@@ -17,10 +19,10 @@ At your domain registrar, add three A records pointing to the VPS IP:
 | Type | Name | Value |
 |---|---|---|
 | A | @ | 189.31.32.165 |
-| A | poultry | 189.31.32.165 |
+| A | juanvet | 189.31.32.165 |
 | A | sugbo | 189.31.32.165 |
 
-(Or one wildcard record `*` instead of the last two, so future projects need no DNS change.) Check with `nslookup poultry.cccbdai.tech` before step 2; it can take a few minutes to an hour.
+(Or one wildcard record `*` instead of the last two, so future projects need no DNS change.) Check with `nslookup juanvet.cccbdai.tech` before step 2; it can take a few minutes to an hour.
 
 ## 2. Start the gateway
 
@@ -64,7 +66,7 @@ Path routing works when the app uses relative URLs (fetch("chat"), not fetch("/c
 
 ## Facebook Messenger
 
-Webhook URL: https://poultry.cccbdai.tech/messenger (or https://sugbo.cccbdai.tech/messenger).
+Webhook URL: https://juanvet.cccbdai.tech/messenger (or https://sugbo.cccbdai.tech/messenger).
 
 ## Troubleshooting
 

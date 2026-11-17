@@ -54,7 +54,7 @@ else:
     router = fitted_router(DALAN_EPS)
     _routes = {}
     STARTUP = f"no current dump, refitted in {(time.perf_counter() - _t0) * 1000:.0f} ms (run: python -m dalan.dump)"
-print("PoultryBot:", STARTUP, flush=True)
+print("JuanVet:", STARTUP, flush=True)
 BY_ID = {e["id"]: e for e in KB["entries"]}
 health_ids = {e["id"] for e in KB["entries"] if e["group"] == "health" or e["id"].startswith(("res-parasite", "res-serology"))}
 KB_HASH = hashlib.sha256((REPO / "kb" / "kb.json").read_bytes()).hexdigest()[:16]
@@ -153,7 +153,7 @@ async def answer(question: str) -> dict:
     return out
 
 
-app = FastAPI(title="PoultryBot")
+app = FastAPI(title="JuanVet")
 
 
 class Ask(BaseModel):

@@ -1,6 +1,6 @@
 # Each bot is reachable two ways:
-#   subdomain:  https://poultry.DOMAIN   https://sugbo.DOMAIN
-#   path:       https://DOMAIN/poultry/  https://DOMAIN/sugbo/
+#   subdomain:  https://juanvet.DOMAIN   https://sugbo.DOMAIN
+#   path:       https://DOMAIN/juanvet/  https://DOMAIN/sugbo/
 # The bot pages use relative URLs, so they work under a path without changes.
 # To add a project: add a "handle_path" block below and a subdomain block, then: docker compose restart
 
@@ -11,8 +11,9 @@
 {$DOMAIN} {
 	encode gzip
 
-	redir /poultry /poultry/ 308
-	handle_path /poultry/* {
+	redir /juanvet /juanvet/ 308
+	redir /poultry* /juanvet/ 308
+	handle_path /juanvet/* {
 		reverse_proxy 127.0.0.1:8000
 	}
 
@@ -27,7 +28,7 @@
 	}
 }
 
-poultry.{$DOMAIN} {
+juanvet.{$DOMAIN} {
 	encode gzip
 	reverse_proxy 127.0.0.1:8000
 }

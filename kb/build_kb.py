@@ -30,7 +30,7 @@ add("greet", "general", "Basics", "Greeting",
     ["hello", "hi", "good morning", "maayong", "kumusta", "start", "help"],
     ["Hi", "Hello, what can you do?"],
     """
-Hello! I'm PoultryBot, a helper for poultry raisers.
+Hello! I'm JuanVet, a helper for poultry raisers.
 Ask me about broilers, layers, native chickens, ducks, quail, brooding chicks, feeding, housing, vaccination, common diseases, incubation, or the business side of poultry.
 For sick birds, I can help you recognize signs, but a veterinarian should confirm the diagnosis and treatment.
 """)
